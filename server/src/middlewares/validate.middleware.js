@@ -5,8 +5,18 @@ function validate(schema) {
 			req.body = schema.parse(req.body);
 			next();
 		} catch (err) {
-			console.error(`Error validate: ${err.errors}`);
-			return res.status(400).json({ error: err.errors });
+			if (err.errors) {
+				const formattedErrors = err.errors.map((e) => ({
+					field: e.path[0],
+					message: e.message,
+				}));
+				console.error(`Validation Error: ${JSON.stringify(formattedErrors)}`);
+				return res.status(422).json({
+					error: "Validation failed",
+					details: formattedErrors,
+				});
+			}
+			next(err);
 		}
 	};
 }
@@ -17,7 +27,18 @@ function validatePartial(schema) {
 			req.body = schema.partial().parse(req.body);
 			next();
 		} catch (err) {
-			return res.status(400).json({ error: err.errors });
+			if (err.errors) {
+				const formattedErrors = err.errors.map((e) => ({
+					field: e.path[0],
+					message: e.message,
+				}));
+				console.error(`Validation Error (partial): ${JSON.stringify(formattedErrors)}`);
+				return res.status(422).json({
+					error: "Validation failed",
+					details: formattedErrors,
+				});
+			}
+			next(err);
 		}
 	};
 }
