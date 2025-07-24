@@ -14,8 +14,8 @@ const router = express.Router();
 
 router.get("/", getAll);
 router.get("/:id", getById);
-router.post("/", validate(blogSchema), create);
-router.patch("/:id", validatePartial(blogPartialSchema), update);
-router.delete("/:id", remove);
+router.post("/create", validate(blogSchema), create);
+router.patch("/update/:id", validatePartial(blogPartialSchema), update);
+router.delete("/delete/:id", remove);
 
 module.exports = router;
