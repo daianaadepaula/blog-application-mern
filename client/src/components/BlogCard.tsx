@@ -9,7 +9,7 @@ const BlogCard = ({ data, refetch, onEditClick }) => {
   };
 
   return (
-    <div className="col-sm-6 mx-auto card my-3">
+    <div className="col-sm-12 mx-auto card my-3">
       <div className="card-header">
         <Link to={`/blog/${data._id}-${slugify(data.title)}`}>
           <h4 className="card-title">{data.title}</h4>

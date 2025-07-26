@@ -43,14 +43,17 @@ const HomePage = () => {
 	return (
 		<>
 			{data && data.length > 0 ? (
-				data.map((curr, index) => (
-					<BlogCard
-						key={index}
-						data={curr}
-						refetch={() => setRefetch(!refetch)}
-						onEditClick={handleEditClick}
-					/>
-				))
+				<div className="row px-3">
+					{data.map((curr, index) => (
+						<div key={index} className="col-12 col-md-6 col-lg-4 d-flex">
+							<BlogCard
+								data={curr}
+								refetch={() => setRefetch(!refetch)}
+								onEditClick={handleEditClick}
+							/>
+						</div>
+					))}
+				</div>
 			) : (
 				<div className="card mx-auto py-3 mt-3">
 					<p className="text-center mt-5">Nenhum post encontrado.</p>
