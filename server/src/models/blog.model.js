@@ -1,14 +1,16 @@
-const { z } = require("zod");
+const mongoose = require("mongoose");
 
-const blogSchema = z.object({
-	title: z.string({ required_error: "Título é obrigatorio" })
-		.min(2, "Título pelo menos 2 caracteres"),
-	description: z.string({ required_error: "Descrição é obrigatoria" })
-		.min(2, "Descrição pelo menos 2 caracteres"),
-	content: z.string({ required_error: "Conteúdo é obrigatorio" })
-		.min(2, "Conteúdo pelo menos 2 caracteres"),
-});
+const BlogSchema = new mongoose.Schema(
+	{
+		title: { type: String, required: true },
+		description: { type: String, required: true },
+		content: { type: String, required: true },
+	},
+	{
+		timestamps: true,
+	}
+);
 
-const blogPartialSchema = blogSchema.partial();
+const BlogModel = mongoose.model("Blog", BlogSchema);
 
-module.exports = { blogSchema, blogPartialSchema };
+module.exports = BlogModel;
